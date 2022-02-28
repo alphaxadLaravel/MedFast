@@ -9,7 +9,7 @@ class TermsAndCondtion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  const Text("MedFast Terms & Conditions"),
+        title:  const Text("MedFast Terms of Service"),
         backgroundColor: Colors.lightBlueAccent,
         elevation: 2,
         ),

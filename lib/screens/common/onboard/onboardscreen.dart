@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medfast/screens/common/onboard/onboard_data.dart';
 import 'package:medfast/screens/common/welcome/welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardScreen extends StatefulWidget {
   const OnBoardScreen({ Key? key }) : super(key: key);
@@ -25,6 +26,14 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
         shape: BoxShape.circle,
       ),
     );
+  }
+
+  seenOnBoard() async{
+    int seen = 0;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('onBoard', seen);
+
   }
   @override
   Widget build(BuildContext context) {
@@ -82,7 +91,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 curentPage == boardContents.length - 1 ?
                 GetStarted(
                   btnName: 'Get Started',
-                  onPressed: (){
+                  onPressed: ()async{
+                    await seenOnBoard();
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));
                   },
                 ) :
@@ -91,7 +101,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                   children: [
                     OnBoardNavBtn(
                       name: 'Skip',
-                      onPressed: (){
+                      onPressed: ()async{
+                       await seenOnBoard();
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));
                         
                       },

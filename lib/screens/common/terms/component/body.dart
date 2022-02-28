@@ -5,7 +5,7 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  const String pdfText = """
+  const String terms = """
 END USER LICENSE AGREEMENT 
 
 Last updated January 17, 2022 
@@ -161,7 +161,7 @@ This license agreement is governed by the laws of Tanzania excluding its conflic
       children: const [
         Expanded(
           child: Text(
-            pdfText,
+            terms,
           ),
         ),
       ],

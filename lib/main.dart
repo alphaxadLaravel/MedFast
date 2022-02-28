@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:medfast/screens/common/constants/constants.dart';
 import 'package:medfast/screens/common/constants/routes.dart';
 import 'package:medfast/screens/common/onboard/onboardscreen.dart';
+import 'package:medfast/screens/common/welcome/welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+int? isSeen;
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  isSeen = prefs.getInt('onBoard');
   runApp(const MyApp());
 }
 
@@ -19,7 +25,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: OnBoardScreen.id,
+      initialRoute:isSeen !=0 ?OnBoardScreen.id : WelcomeScreen.id,
       routes: routes,
     );
   }

@@ -95,7 +95,7 @@ class _BodyState extends State<Body> {
   _textField({bool? first, last}){
     return SizedBox(
       height: 70,
-      child: AspectRatio(aspectRatio: 0.7,
+      child: AspectRatio(aspectRatio: 0.6,
           child: TextField(
             autofocus: true,
             onChanged:  (value){
@@ -118,7 +118,7 @@ class _BodyState extends State<Body> {
             decoration: InputDecoration(
               counter: const Offstage(),
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(width: 2, color: Colors.black12),
+                borderSide: const BorderSide(width: 1, color: Colors.black12),
                 borderRadius: BorderRadius.circular(12)
               ),
               focusedBorder: OutlineInputBorder(

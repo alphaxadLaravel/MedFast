@@ -1,37 +1,56 @@
 
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
+// Re usable Text Field hii hapa
 class FieldInput extends StatelessWidget {
   final TextInputType type;
   final String hint;
   final String labelname;
   final IconData prefix;
+  final String prefixWord;
+  final ValueChanged<String> onChanged;
+  final TextEditingController controller;
+  final FormFieldValidator validate;
   const FieldInput(
-      {Key? key, required this.type, required this.hint, required this.labelname, required this.prefix})
+      {Key? key, 
+      required this.type, 
+      required this.hint, 
+      required this.labelname, 
+      required this.prefix, 
+      required this.onChanged, 
+      required this.controller, 
+      required this.validate, 
+      required this.prefixWord
+      })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MedFastTextField(
-      child: TextField(
+      child: TextFormField(
         keyboardType: type,
+        onChanged: onChanged,            
+        controller: TextEditingController(),
+        validator: validate,
         decoration: InputDecoration(
           hintText: hint,
           labelText: labelname,
-         border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(29),
-          ),
-          borderSide: BorderSide(color: Colors.black26),
-                 
-        ),
-        prefixIcon: Icon(prefix)
+         prefix: Text(prefixWord),
+         border:   inputBorder(),
+         focusedBorder: focusedInputBorder(),
+         focusedErrorBorder: focusedErrorBorder(),
+         errorBorder: errorInputBorder(),
+         prefixIcon: Icon(prefix)
         ),
       ),
     );
   }
+
 }
 
+// container inayobeba reusable textfield hii hapa
 class MedFastTextField extends StatelessWidget {
   final Widget child;
   const MedFastTextField({
@@ -47,83 +66,6 @@ class MedFastTextField extends StatelessWidget {
       width: size.width * 0.9,
       child: child,
     );
-  }
-}
-
-// the password textfield here
-class PasswordTextField extends StatefulWidget {
-  const PasswordTextField({ Key? key }) : super(key: key);
-
-  @override
-  _PasswordTextFieldState createState() => _PasswordTextFieldState();
-}
-
-class _PasswordTextFieldState extends State<PasswordTextField> {
-  late  bool obscured = true;
-  @override
-  Widget build(BuildContext context) {
-    return  MedFastTextField(
-      child: TextField(
-        keyboardType: TextInputType.visiblePassword,
-        obscureText: obscured,
-        decoration: InputDecoration(
-          hintText: "Your Password",
-          labelText: "Password",
-         border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(29),
-          ),
-          borderSide: BorderSide(color: Colors.black26),
-                 
-        ),
-        prefixIcon: const Icon(Icons.lock),
-         suffixIcon: GestureDetector(
-          onTap: () {
-            setState(() {
-              obscured = !obscured;
-            });
-          },
-          child:
-          Icon(obscured ? Icons.visibility : Icons.visibility_off),
-        ),
-
-        
-        ),
-        
-      ),
-    );
-  }
-}
-
-class AgreedCheckBox extends StatefulWidget {
-  const AgreedCheckBox({ Key? key }) : super(key: key);
-
-  @override
-  _AgreedCheckBoxState createState() => _AgreedCheckBoxState();
-}
-
-class _AgreedCheckBoxState extends State<AgreedCheckBox> {
-   bool agree = false;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-          children: [
-            Material(
-              child: Checkbox(
-                value: agree,
-                onChanged: (value) {
-                  setState(() {
-                    agree = value ?? false;
-                  });
-                },
-              ),
-            ),
-            const Text(
-              'I have read and accept terms and conditions',
-              overflow: TextOverflow.ellipsis,
-            )
-          ],
-        );
   }
 }
 
@@ -195,6 +137,11 @@ class _RegionDropDownState extends State<RegionDropDown> {
         onChanged: (val) => setState(() =>
           selectedRegion = val as String?
         ),
+        validator: (value){
+          if(value == null){
+            return "Please fill the City";
+          }
+        },
         
       ),
     );
@@ -269,6 +216,11 @@ class _RegionsDropClientState extends State<RegionsDropClient> {
         onChanged: (val) => setState(() =>
           clientRegion = val as String?
         ),
+        validator: (value){
+          if(value == null){
+            return "Tafadhali Jaza mkoa";
+          }
+        },
         
       ),
     );
@@ -319,6 +271,11 @@ class _MedicalRanksState extends State<MedicalRanks> {
         onChanged: (val) => setState(() =>
           selectedRank = val as String?
         ),
+         validator: (value){
+          if(value == null){
+            return "Please fill the Medical Rank";
+          }
+        },
         
       ),
     );
